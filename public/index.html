@@ -1,1 +1,27 @@
-teste public
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Consulta de Invocador - League of Legends</title>
+</head>
+<body>
+  <h2>Consultar Invocador</h2>
+  <form action="summoner_info.php" method="post">
+    <label for="region">Região:</label>
+    <select name="region" id="region" required>
+      <option value="br1">BR</option>
+      <option value="na1">NA</option>
+      <option value="euw1">EUW</option>
+      <option value="eun1">EUNE</option>
+      <option value="kr">KR</option>
+    <!-- Adicione outras regiões se quiser  -->
+    </select><br><br>
+
+    <label for="summoner">Nome do Invocador:</label>
+    <input type="text" id="summoner" name="summoner" required><br><br>
+
+    <input type="submit" value="Buscar">
+  </form>
+
+</body>
+</html>
