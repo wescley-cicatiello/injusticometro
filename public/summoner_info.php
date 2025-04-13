@@ -33,7 +33,7 @@ if (!$apiKey) {
     die("❌ Não foi possível recuperar a chave da API.");
 }
 
-// REQUISIÇÃO PARA A API DA RIOT
+// REQUISIÇÃO PARA A API DA RIOT account info
 
 
 $url = "https://$region.api.riotgames.com/riot/account/v1/accounts/by-riot-id/$summonerName/$tagline?api_key=$apiKey";
@@ -42,9 +42,6 @@ $url = "https://$region.api.riotgames.com/riot/account/v1/accounts/by-riot-id/$s
 $ch = curl_init($url);
 
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-// curl_setopt_array($ch, [
-//     CURLOPT_RETURNTRANSFER => true
-// ]);
 
 $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 $err = curl_error($ch);
@@ -60,13 +57,54 @@ if ($err != null && strlen($err) > 0) var_dump("Erro: $err");
 var_dump($map);
 var_dump($map["puuid"]);
 var_dump($map["gameName"]);
+$puuid = $map["puuid"];
 
-https://br1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/ZbqamuYdo-QsQJWhtpoAVmiQKkCpVrwDY7YJqA_d6sh1pOB52I_g8oSCWex6F79IhFsZcBIOY5YP6A?api_key=RGAPI-67cfb242-4bcb-4b07-a997-e370a6056f0a
-
-
-
+// REQUISIÇÃO PARA A API DA RIOT match history
 
 
+$matchHistoyId_url = "https://$region.api.riotgames.com/lol/match/v5/matches/by-puuid/$puuid/ids?type=ranked&start=0&count=20&api_key=$apiKey";
+
+$ch_matchHistory = curl_init($matchHistoyId_url);
+
+curl_setopt($ch_matchHistory, CURLOPT_RETURNTRANSFER, true);
+
+$httpCode_matchHistory = curl_getinfo($ch_matchHistory, CURLINFO_HTTP_CODE);
+$err_matchHistory = curl_error($ch_matchHistory);
+
+$response_matchHistory = curl_exec($ch_matchHistory);
+$map_matchHistory = json_decode($response_matchHistory, true);
+
+curl_close($ch_matchHistory);
+
+var_dump("Código nº: $httpCode_matchHistory");
+if ($err_matchHistory != null && strlen($err_matchHistory) > 0) var_dump("Erro: $err_matchHistory");
+
+curl_close($ch_matchHistory);
+
+var_dump($map_matchHistory);
+
+$varteste = $map_matchHistory[0];
+
+$match_url = "https://$region.api.riotgames.com/lol/match/v5/matches/$varteste?api_key=$apiKey";
+
+$ch_matchData = curl_init($match_url);
+
+curl_setopt($ch_matchData, CURLOPT_RETURNTRANSFER, true);
+
+$httpCode_matchData = curl_getinfo($ch_matchData, CURLINFO_HTTP_CODE);
+$err_matchData = curl_error($ch_matchData);
+
+$response_matchData = curl_exec($ch_matchData);
+$map_matchData = json_decode($response_matchData, true);
+
+curl_close($ch_matchData);
+
+var_dump("Código nº: $httpCode_matchData");
+if ($err_matchData != null && strlen($err_matchData) > 0) var_dump("Erro: $err_matchData");
+
+curl_close($ch_matchData);
+
+var_dump($map_matchData);
 
 
 
@@ -82,19 +120,12 @@ https://br1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/ZbqamuYdo-QsQJW
 
 
 
-// TRATA E MOSTRA O RESULTADO
-// if ($httpCode === 200) {
-//     $data = json_decode($response, true);
-//         var_dump($response);
-//     echo "<h2>🔍 Resultado para: " . htmlspecialchars($summonerName) . "</h2>";
-//     echo "<ul>";
-//     echo "<li><strong>ID:</strong> {$data['id']}</li>";
-//     echo "<li><strong>PUUID:</strong> {$data['puuid']}</li>";
-//     echo "<li><strong>Nível:</strong> {$data['summonerLevel']}</li>";
-//     echo "</ul>";
-// } else {
-//     echo "❌ Erro ao buscar dados do invocador. Código HTTP: $httpCode<br>";
-//     echo "Resposta: <pre>$response</pre>";
-// }
+
+
+
+
+
+
+
 
 ?>
