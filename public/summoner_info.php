@@ -83,7 +83,7 @@ curl_close($ch_matchHistory);
 
 var_dump($map_matchHistory);
 
-$varteste = $map_matchHistory[0];
+$varteste = $map_matchHistory[0]; //TODO: change var name
 
 $match_url = "https://$region.api.riotgames.com/lol/match/v5/matches/$varteste?api_key=$apiKey";
 
